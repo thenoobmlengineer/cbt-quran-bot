@@ -1,0 +1,17 @@
+cat > .gitignore << 'EOF'
+# Python artifacts
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# Streamlit artifacts
+.streamlit/
+
+# ChromaDB local storage
+quran_db/
+
+# OS files
+.DS_Store
+Thumbs.db
+EOF
