@@ -44,10 +44,17 @@ memory = ConversationBufferMemory(
 
 
 # ─── 2) ChromaDB setup ────────────────────────────────────────────────────────
+from chromadb.config import Settings
 emb_fn = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2"
 )
-client_db = chromadb.PersistentClient(path=DB_DIR)
+# use the new in-process client (no external Rust server)
+client_db = chromadb.Client(
+    Settings(
+        chroma_db_impl="duckdb+parquet",
+        persist_directory=DB_DIR
+    )
+)
 collection = client_db.get_or_create_collection(
     name="quran",
     embedding_function=emb_fn
